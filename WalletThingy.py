@@ -6,7 +6,7 @@ ADDRESSES = [
     "xxxxxxxxxxxxxxxxxxx", # Add additional addresses seperated by commas
 ]
 
-CHECK_INTERVAL = 60  # seconds
+CHECK_INTERVAL = 300  # seconds
 
 USE_DISCORD = True
 DISCORD_WEBHOOK = False # " False, or put your Webhook in quotes: 'https://discord.com/api/webhooks/XXXXXX/YYYYYYYYYYYYYYYYYY"
