@@ -28,7 +28,7 @@ class BalanceChecker:
                 url=self.node_url,
                 # type_registry_preset='substrate-node-template'
             )
-            logging.info("Successfully connected to the node")
+            #logging.info("Successfully connected to the node")
         except Exception as e:
             logging.error(f"Failed to connect to node: {e}")
             self.substrate = None
@@ -37,8 +37,9 @@ class BalanceChecker:
         try:
             result = self.substrate.query('System', 'Account', [address])
             free_balance = result['data']['free'].value  # Use .value for U128
-            balance_decimal = round(Decimal(free_balance) / Decimal(10**18),5)  # Adjust for Substrate's decimal format
-            logging.debug(f"Balance for {address}: {balance_decimal}")
+            balance_decimal = round(Decimal(free_balance) / Decimal(10**18), 5)  # Adjust for Substrate's decimal format
+            short_address = address[-4:]  # Display only the last 4 characters of the address
+            logging.debug(f"Balance for ...{short_address}: {balance_decimal}")
             return balance_decimal
         except AttributeError as e:
             logging.error(f"Attribute error while retrieving balance for {address}: {e}")
@@ -49,11 +50,10 @@ class BalanceChecker:
             return None
 
     def notify(self, message):
-        if self.first_cycle == False:
-            if self.USE_DISCORD:
-                self.send_discord_notification(message)
-            if self.USE_PUSHBULLET:
-                self.send_pushbullet_notification(message)
+        if self.discord_webhook:
+            self.send_discord_notification(message)
+        if self.pushbullet_token:
+            self.send_pushbullet_notification(message)
 
     def send_discord_notification(self, message):
         try:
@@ -93,14 +93,13 @@ class BalanceChecker:
             # Notify only if this is not the first cycle and balance has changed
             if previous_balance is not None and current_balance != previous_balance:
                 message = (
-                    f"Balance change detected for {address}:\n"
-                    f"Previous: {previous_balance} \nCurrent: {current_balance}"
+                    f"Balance change detected for {address[-4:]}...{address[:4]}\nChange: {current_balance} ({round(current_balance - previous_balance,3)} AI3)\n"
                 )
                 logging.info(message)
                 self.notify(message)
             else:
-                logging.info(f"Checked balance for {address}: No Change ({current_balance} AI3)")
-
+                # logging.info(f"Checked balance for {address[-4:]}...{address[:4]}:No Change ({current_balance})")
+                pass
             # Update the balance for the next cycle
             self.previous_balances[address] = current_balance
 
