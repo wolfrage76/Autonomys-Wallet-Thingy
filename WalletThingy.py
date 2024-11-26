@@ -1,14 +1,17 @@
-from AutonomysWallet import BalanceChecker
+from modules.AutonomysWallet import BalanceChecker
 
 # Configuration
-NODE_URL = "ws://192.168.1.208:9944"
+NODE_URL = "ws://192.168.1.208:9944" # Thew node and port to connect to
 ADDRESSES = [
-    "sue1dbNHjokfnRG9Uqqd34C3VVDBZ5kyraHREAqzyvzsxuPFY", # Add additional addresses seperated by commas
+    "xxxxxxxxxxxxxxx", # Add additional addresses seperated by commas
 ]
 
-CHECK_INTERVAL = 300  # seconds
+CHECK_INTERVAL = 600 # seconds
 
-DISCORD_WEBHOOK = 'https://discord.com/api/webhooks/1310714764091064463/CUjDNhjVqY4lSP0-9d9o6W3px_Oou_wLuyCdMfvN-PFYj3DN5mAJBUXncCe6V-e13Q_o' # " False, or put your Webhook in quotes: 'https://discord.com/api/webhooks/XXXXXX/YYYYYYYYYYYYYYYYYY"'
+
+DISCORD_WEBHOOK = False # '' 
+# False, or put your Webhook in quotes: 'https://discord.com/api/webhooks/XXXXXX/YYYYYYYYYYYYYYYYYY'
+
 
 PUSHBULLET_TOKEN = False # False, or put your token in quotes: 'your_pushbullet_access_token'
 

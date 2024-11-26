@@ -88,7 +88,6 @@ class BalanceChecker:
                 continue
 
             previous_balance = self.previous_balances.get(address)
- 
 
             # Notify only if this is not the first cycle and balance has changed
             if previous_balance is not None and current_balance != previous_balance:
