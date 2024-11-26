@@ -7,8 +7,6 @@ ADDRESSES = [
 ]
 
 CHECK_INTERVAL = 600 # seconds
-
-
 DISCORD_WEBHOOK = False # '' 
 # False, or put your Webhook in quotes: 'https://discord.com/api/webhooks/XXXXXX/YYYYYYYYYYYYYYYYYY'
 

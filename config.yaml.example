@@ -1,0 +1,10 @@
+node_url: "ws://NodeIP:NodePort"  # Node and port to connect to
+
+addresses:  # List of wallet addresses
+  - "ADDRESS1"
+  - "ADDRESS2" # Etc
+
+check_interval: 1200  # Time interval in seconds
+
+discord_webhook: False  # False or a Discord Webhook URL
+pushbullet_token: False  # False, or a Pushbullet token

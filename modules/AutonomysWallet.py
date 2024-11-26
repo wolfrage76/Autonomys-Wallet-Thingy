@@ -92,7 +92,7 @@ class BalanceChecker:
             # Notify only if this is not the first cycle and balance has changed
             if previous_balance is not None and current_balance != previous_balance:
                 message = (
-                    f"Balance change detected for {address[-4:]}...{address[:4]}\nChange: {current_balance} ({round(current_balance - previous_balance,3)} AI3)\n"
+                    f"Balance change detected for {address[:4]}...{address[-4:]}\nChange: {current_balance} ({round(current_balance - previous_balance,3)} AI3)\n"
                 )
                 logging.info(message)
                 self.notify(message)
