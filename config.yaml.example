@@ -4,7 +4,18 @@ addresses:  # List of wallet addresses
   - "ADDRESS1"
   - "ADDRESS2" # Etc
 
-check_interval: 1200  # Time interval in seconds
+check_interval: 6  # Time interval in seconds
+# run_as_tmux: False # Leave for now
 
-discord_webhook: False  # False or a Discord Webhook URL
-pushbullet_token: False  # False, or a Pushbullet token
+notifications:
+  discord_webhook: False # 'webhook_url' # Replace with Discord Webhook URL or set to false
+  
+  pushbullet_token:  False # "pushbullet_token" # Replace with '<token>' or set false.
+  
+  pushover:
+    user_key: False  # "your_pushover_user_key"
+    api_token: False # "your_pushover_api_token"
+  
+  telegram:
+    bot_token: False # "your_telegram_bot_token"
+    chat_id:   False # "your_telegram_chat_id"
