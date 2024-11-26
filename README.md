@@ -56,19 +56,7 @@ If you plan to use the tmux status bar with decorative symbols:
 
 ### 4. Configure `config.yaml`
 
-Create a `config.yaml` file in the project directory with the following content:
-
-```yaml
-node_url: "ws://your-node-url:9944"
-addresses:
-  - "your_wallet_address_1"
-  - "your_wallet_address_2"
-check_interval: 30  # in seconds
-notifications:
-  discord_webhook: "your_discord_webhook_url"
-  pushbullet_token: "your_pushbullet_token"
-run_as_tmux: true  # Set to true if using tmux status bar
-```
+Edit the `config.yaml.example` file in the project directory, edit settings then rename to `config.yaml`:
 
 - **`node_url`**: WebSocket URL of the blockchain node.
 - **`addresses`**: List of wallet addresses to monitor.
