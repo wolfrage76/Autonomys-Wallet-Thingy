@@ -6,7 +6,7 @@ This will monitor a set of wallets and notify you of updates to your balance via
 
 3: If using tmux:
     edit '~/.tmux.conf' and add in:
-    '''
+    ```
     # Enable 256 colors
 set -g default-terminal "screen-256color"
 
@@ -36,7 +36,7 @@ set -g status-left '#[bg=colour28,fg=white]#[bg=colour28,fg=white] #(cat /tmp
 # Align the status-left to the left
 set -g status-justify left
 
-    '''
+    ```
 
 4: Run 'tmux source-file ~/.tmux.conf' if using tmux
 
