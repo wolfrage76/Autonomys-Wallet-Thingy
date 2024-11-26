@@ -1,9 +1,12 @@
-This will monitor a set of wallets and notify you of updates to your balance.
+This will monitor a set of wallets and notify you of updates to your balance via Discord or Pushbullet.
 
-Edit WalletThingy.py
+1: Edit WalletThingy.py
 
-Fill out the Discord and/or Pushover integration, or set to False to disable notifications of that type
+2: Fill out the Discord and/or Pushover integration, or set to False to disable notifications of that type
 
-Run `python WalletThingy.py'
+3: Run 'python WalletThingy.py' (Or might be 'python3 WalletThingy.py')
 
-Thank Wolfrage in the Autonomys discord channel.
+4: Thank Wolfrage in the Autonomys discord channel.
+
+Optional on Linux, Run it in the background with screen:
+'screen -dmS wallet python WalletThingy.py'
