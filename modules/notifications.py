@@ -2,11 +2,14 @@ import requests
 import logging
 
 class NotificationManager:
-    def __init__(self, discord_webhook=None, pushbullet_token=None, pushover_config=None, telegram_config=None):
+    def __init__(self, discord_webhook=None, pushbullet_token=None, pushover_user_key=None, pushover_app_token=None, telegram_bot_token=None, telegram_chat_id=None):
         self.discord_webhook = discord_webhook
         self.pushbullet_token = pushbullet_token
-        self.pushover_config = pushover_config  # Dictionary: {'user_key': '...', 'api_token': '...'}
-        self.telegram_config = telegram_config  # Dictionary: {'bot_token': '...', 'chat_id': '...'}
+        self.pushover_user_key = pushover_user_key
+        self.pushover_app_token = pushover_app_token
+        self.telegram_bot_token = telegram_bot_token
+        self.telegram_chat_id = telegram_chat_id, telegram_bot_token
+        
         print('Balance Checker Initialized')
 
     def send_notification(self, message):
@@ -14,12 +17,13 @@ class NotificationManager:
             self._send_discord_notification(message)
         if self.pushbullet_token:
             self._send_pushbullet_notification(message)
-        if self.pushover_config:
+        if self.pushover_app_token and self.pushover_user_key:
             self._send_pushover_notification(message)
-        if self.telegram_config:
+        if self.telegram_chat_id and self.telegram_bot_token:
             self._send_telegram_notification(message)
 
     def _send_discord_notification(self, message):
+        logging.info("Sending Discord notification...")
         try:
             payload = {"content": message}
             response = requests.post(self.discord_webhook, json=payload)

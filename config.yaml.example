@@ -4,8 +4,11 @@ addresses:  # List of wallet addresses
   - "ADDRESS1"
   - "ADDRESS2" # Etc
 
+enable_gpu: True # Enable GPU monitoring when tmux-ing
+
 check_interval: 6  # Time interval in seconds
-# run_as_tmux: False # Leave for now
+
+#run_as_tmux: True # Shouldn't be needed to be set False, but need to test stuff
 
 notifications:
   discord_webhook: False # 'webhook_url' # Replace with Discord Webhook URL or set to false

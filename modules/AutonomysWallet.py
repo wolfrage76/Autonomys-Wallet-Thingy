@@ -18,13 +18,7 @@ class BalanceChecker:
         self.first_cycle = True
         self.previous_balances = {}
 
-        # Notification manager
-        self.notification_manager = NotificationManager(
-            discord_webhook=notification_config.get("discord_webhook"),
-            pushbullet_token=notification_config.get("pushbullet_token"),
-            pushover_config=notification_config.get("pushover"),
-            telegram_config=notification_config.get("telegram"),
-        )
+    
 
         # Configure logging
         logging.basicConfig(
@@ -32,12 +26,8 @@ class BalanceChecker:
             format="%(asctime)s [%(levelname)s] %(message)s"
         )
         logging.info("BalanceChecker initialized")
+        
 
-    def notify(self, message):
-        """
-        Send a notification using the configured notification methods.
-        """
-        self.notification_manager.send_notification(message)
 
     def connect_to_node(self):
         """
@@ -57,6 +47,7 @@ class BalanceChecker:
         return f"{address[:4]}...{address[-4:]}"
 
     def get_balance(self, address):
+        
         """
         Retrieve the balance for a specific wallet address.
         """
@@ -93,10 +84,10 @@ class BalanceChecker:
                 change = round(current_balance - previous_balance, 3)
                 message = (
                     f"Balance change detected for {self.truncate_address(address)}:\n"
-                    f"Change: {current_balance} ({change} AI3)\n"
+                    f"Change: {current_balance} ({'+' if change > 0 else '-'} {change} AI3)\n"
                 )
             
-                # logging.info(message)
+                logging.info(message)
                 self.notify(message)
 
             # Update the balance for the next cycle

@@ -6,6 +6,8 @@ import subprocess
 import psutil
 import logging
 import yaml
+
+from modules.notifications import NotificationManager
 from itertools import cycle
 from substrateinterface import SubstrateInterface
 
@@ -55,7 +57,7 @@ def truncate_address(address):
     return f"{address[:4]}...{address[-4:]}"
 
 class BalanceChecker:
-    def __init__(self, node_url, addresses, check_interval=600, notification_config=None, run_as_tmux=False):
+    def __init__(self, node_url, addresses, telegram_chat_id=None, telegram_bot_token=None, check_interval=600, pushover_app_token=None, pushover_user_key=None, notification_config=None, run_as_tmux=False, discord_webhook=None, pushbullet_token=None, ):
         self.node_url = node_url
         self.addresses = addresses
         self.check_interval = check_interval
@@ -66,7 +68,25 @@ class BalanceChecker:
         self.lock = threading.Lock()
         self.connect_to_node()
         self.initialize_balances()
-
+        config = load_config()
+        self.notification_manager = NotificationManager(
+        discord_webhook=config["notifications"].get("discord_webhook"),
+        pushbullet_token=config["notifications"].get("pushbullet_token"),
+        pushover_user_key=config["notifications"].get("pushover", {}).get("user_key"),
+        pushover_app_token=config["notifications"].get("pushover", {}).get("app_token"),
+        
+        
+        telegram_bot_token=config["notifications"].get("telegram",{}).get('bot_token'),
+        telegram_chat_id=config["notifications"].get("telegram",{}).get('chat_id'),
+    )
+        self.discord_webhook = discord_webhook
+        self.pushbullet_token = pushbullet_token
+        self.pushover_user_key = pushover_user_key
+        self.pushover_app_token = pushover_app_token
+        self.telegram_bot_token = telegram_bot_token
+        self.telegram_chat_id = telegram_chat_id, telegram_bot_token
+        
+        
     def connect_to_node(self):
         """
         Connect to the blockchain node using substrate-interface.
@@ -113,6 +133,7 @@ class BalanceChecker:
         Monitor the balances and send notifications if there are changes.
         """
         logging.info("Starting balance monitoring...")
+        self.notification_manager.send_notification('\tStarting balance monitoring...')
         while not stop_event.is_set():
             for address in self.addresses:
                 balance = self.get_balance(address)
@@ -131,8 +152,9 @@ class BalanceChecker:
         Send a notification about the balance change.
         """
         message = f"Balance change for {truncate_address(address)}: {change:+.4f} AI3 (New Balance: {balance:.4f} AI3)"
+        
         logging.info(f"Sending notification: {message}")
-        # Implement actual notification logic here (e.g., Discord, Pushbullet, etc.)
+        self.notification_manager.send_notification(message)
 
 def fetch_gpu_stats(max_gpus=2):
     """
@@ -248,8 +270,8 @@ def update_status_bar(checker, config, status_file_path, stop_event):
 
                 # Determine how many GPUs to display
                 max_gpus = 2 if terminal_width < 120 else 3
-                gpu_stats = fetch_gpu_stats(max_gpus=max_gpus)
-                gpu_text = " | ".join(gpu_stats) if gpu_stats else "No GPU Data"
+                gpu_stats = fetch_gpu_stats(max_gpus=max_gpus) if config.get("enable_gpu", True) else str()
+                gpu_text = " | ".join(gpu_stats) if gpu_stats else str()
 
                 # Combine all stats into a single line
                 combined_status = f"{wallet_text} | {sys_stat} | {gpu_text}"
