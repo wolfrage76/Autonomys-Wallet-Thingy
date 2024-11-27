@@ -142,8 +142,9 @@ class BalanceChecker:
                         last_balance = self.last_balances.get(address)
                         if last_balance is not None and balance != last_balance:
                             change = balance - last_balance
+                            formatted_balance = self.format_with_commas(balance)
                             logging.info(f"Balance change detected for {truncate_address(address)}: {change:.4f} AI3")
-                            self.send_notification(address, self.format_with_commas(balance), change)
+                            self.send_notification(address, formatted_balance, change)
                         self.last_balances[address] = balance
             time.sleep(self.check_interval)
     def format_with_commas(number):
@@ -151,7 +152,7 @@ class BalanceChecker:
         try:
             # If it's a float, format to include commas and maintain decimals
             if isinstance(number, float):
-                return f"{number:,.2f}"  # Adjust decimal places if needed
+                return f"{number:,.4f}"  # Adjust decimal places if needed
             # If it's an integer, format with commas
             elif isinstance(number, int):
                 return f"{number:,}"

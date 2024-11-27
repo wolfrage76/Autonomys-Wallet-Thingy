@@ -28,7 +28,7 @@ This script monitors a set of wallets and notifies you of updates to your balanc
 
 ```bash
 git clone https://github.com/wolfrage76/Autonomys-Wallet-Thingy.git
-cd wallet-monitor
+cd Autonomys-Wallet-Thingy
 ```
 
 ### 2. Install Python Dependencies
