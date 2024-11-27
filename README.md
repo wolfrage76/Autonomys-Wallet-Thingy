@@ -62,8 +62,6 @@ Edit the `config.yaml.example` file in the project directory, edit settings then
 - **`addresses`**: List of wallet addresses to monitor.
 - **`check_interval`**: Time interval (in seconds) between balance checks.
 - **`notifications`**: Provide credentials for notification services.
-  
-- **`run_as_tmux`**: Set to `true` to enable tmux status bar integration.
 
 ### 5. Configure tmux (Optional)
 
