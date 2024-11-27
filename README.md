@@ -27,7 +27,7 @@ This script monitors a set of wallets and notifies you of updates to your balanc
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/wallet-monitor.git
+git clone https://github.com/wolfrage76/Autonomys-Wallet-Thingy.git
 cd wallet-monitor
 ```
 

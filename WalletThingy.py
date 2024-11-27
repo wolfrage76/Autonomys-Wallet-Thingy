@@ -143,14 +143,29 @@ class BalanceChecker:
                         if last_balance is not None and balance != last_balance:
                             change = balance - last_balance
                             logging.info(f"Balance change detected for {truncate_address(address)}: {change:.4f} AI3")
-                            self.send_notification(address, balance, change)
+                            self.send_notification(address, self.format_with_commas(balance), change)
                         self.last_balances[address] = balance
             time.sleep(self.check_interval)
+    def format_with_commas(number):
 
+        try:
+            # If it's a float, format to include commas and maintain decimals
+            if isinstance(number, float):
+                return f"{number:,.2f}"  # Adjust decimal places if needed
+            # If it's an integer, format with commas
+            elif isinstance(number, int):
+                return f"{number:,}"
+            else:
+                raise ValueError("Input must be an int or float.")
+        except Exception as e:
+            raise ValueError(f"Error formatting number: {e}")
+        
+    
     def send_notification(self, address, balance, change):
         """
         Send a notification about the balance change.
         """
+        balance = self.format_with_commas(balance)
         message = f"Balance change for {truncate_address(address)}: {change:+.4f} AI3 (New Balance: {balance:.4f} AI3)"
         
         logging.info(f"Sending notification: {message}")
@@ -258,7 +273,7 @@ def update_status_bar(checker, config, status_file_path, stop_event):
                         checker.last_balances[current_address] = balance
 
                 truncated_address = truncate_address(current_address)
-                wallet_text = f"{truncated_address}: {balance:.4f} AI3" if balance is not None else "No Balance Data"
+                wallet_text = f"{truncated_address}: {balance:.4f} AI3" if balance is not None else "---- AI3"
 
                 # Fetch system stats
                 system_stats = fetch_system_stats()
