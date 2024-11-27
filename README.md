@@ -151,7 +151,7 @@ To run the script in the background:
 ## Example tmux Status Bar Output
 
 ```
- sue1...uPFY: 123.45678901 AI3 | CPU: 24.7% | GPU0: NVIDIA Ge... 1.42/8.00GB 45°C 11% 
+⚡ sue1...uPFY: 123.45678901 AI3 | CPU: 24.7% | GPU0: NVIDIA Ge... 1.42/8.00GB 45°C 11% ⚡
 ```
 
 - **Wallet Balance**: Displays the truncated wallet address and current balance.

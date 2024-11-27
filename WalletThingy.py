@@ -52,12 +52,14 @@ def validate_config(config):
 def truncate_address(address):
     """
     Truncate a wallet address for display purposes.
-    Example: sue1dbNHjokfnRG9Uqqd34C3VVDBZ5kyraHREAqzyvzsxuPFY -> sue1...uPFY
+    Example: sue1xxxxxxxxxxxxxxxyvzsxuPFY -> sue1...uPFY
     """
     return f"{address[:4]}...{address[-4:]}"
 
 class BalanceChecker:
-    def __init__(self, node_url, addresses, telegram_chat_id=None, telegram_bot_token=None, check_interval=600, pushover_app_token=None, pushover_user_key=None, notification_config=None, run_as_tmux=False, discord_webhook=None, pushbullet_token=None, ):
+    def __init__(self, node_url, addresses, telegram_chat_id=None, telegram_bot_token=None, check_interval=600, 
+                pushover_app_token=None, pushover_user_key=None, notification_config=None, run_as_tmux=False, 
+                discord_webhook=None, pushbullet_token=None, ):
         self.node_url = node_url
         self.addresses = addresses
         self.check_interval = check_interval
@@ -142,13 +144,15 @@ class BalanceChecker:
                         last_balance = self.last_balances.get(address)
                         if last_balance is not None and balance != last_balance:
                             change = balance - last_balance
-                            formatted_balance = self.format_with_commas(balance)
+                            formatted_balance = balance
                             logging.info(f"Balance change detected for {truncate_address(address)}: {change:.4f} AI3")
                             self.send_notification(address, formatted_balance, change)
                         self.last_balances[address] = balance
             time.sleep(self.check_interval)
-    def format_with_commas(number):
-
+            
+            
+    def format_with_commas(self, incnumber):
+        number = float(incnumber)
         try:
             # If it's a float, format to include commas and maintain decimals
             if isinstance(number, float):
@@ -166,8 +170,8 @@ class BalanceChecker:
         """
         Send a notification about the balance change.
         """
-        balance = self.format_with_commas(balance)
-        message = f"Balance change for {truncate_address(address)}: {change:+.4f} AI3 (New Balance: {balance:.4f} AI3)"
+        newbalance = self.format_with_commas(balance)
+        message = f"Balance change for {truncate_address(address)}: {change:+.4f} AI3 (New Balance: {newbalance} AI3)"
         
         logging.info(f"Sending notification: {message}")
         self.notification_manager.send_notification(message)
@@ -342,37 +346,37 @@ def main():
         run_as_tmux=run_as_tmux,
     )
 
-    if run_as_tmux:
-        # Define the path for the status file that tmux will read
-        status_file_path = "/tmp/tmux_status.txt"
+        #if run_as_tmux:
+    # Define the path for the status file that tmux will read
+    status_file_path = "/tmp/tmux_status.txt"
 
-        # Event to signal threads to stop
-        stop_event = threading.Event()
+    # Event to signal threads to stop
+    stop_event = threading.Event()
 
-        # Create threads for the status bar and balance monitoring
-        status_bar_thread = threading.Thread(target=update_status_bar, args=(checker, config, status_file_path, stop_event))
-        monitoring_thread = threading.Thread(target=checker.start_monitoring, args=(stop_event,))
+    # Create threads for the status bar and balance monitoring
+    status_bar_thread = threading.Thread(target=update_status_bar, args=(checker, config, status_file_path, stop_event))
+    monitoring_thread = threading.Thread(target=checker.start_monitoring, args=(stop_event,))
 
-        # Start the threads
-        status_bar_thread.start()
-        monitoring_thread.start()
+    # Start the threads
+    status_bar_thread.start()
+    monitoring_thread.start()
 
-        try:
-            while True:
-                time.sleep(1)
-        except KeyboardInterrupt:
-            logging.info("Stopping all threads...")
-            stop_event.set()
-            status_bar_thread.join()
-            monitoring_thread.join()
-            logging.info("Exiting BalanceChecker. Goodbye!")
-    else:
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        logging.info("Stopping all threads...")
+        stop_event.set()
+        status_bar_thread.join()
+        monitoring_thread.join()
+        logging.info("Exiting BalanceChecker. Goodbye!")
+""" else:
         try:
             # Create a stop_event for consistency
             stop_event = threading.Event()
             checker.start_monitoring(stop_event)
         except KeyboardInterrupt:
-            logging.info("Exiting BalanceChecker. Goodbye!")
+            logging.info("Exiting BalanceChecker. Goodbye!") """
 
 if __name__ == "__main__":
     main()
