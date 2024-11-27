@@ -92,13 +92,13 @@ set -g status-right ''
 set -g status-left-length 1000
 
 # Define the left side of the status bar with colors and decorators
-set -g status-left '#[bg=colour28,fg=white]#[bg=colour28,fg=white] #(cat /tmp/tmux_status.txt) #[fg=colour28,bg=colour236]'
+set -g status-left '#[bg=colour28,fg=white]⚡#[bg=colour28,fg=white] #(cat /tmp/tmux_status.txt) #[fg=colour28,bg=colour236]⚡'
 
 # Align the status-left to the left
 set -g status-justify left
 ```
 
-**Note**: The decorative symbols `` require a Powerline-compatible font to display correctly.
+**Note**: The decorative symbols `⚡` require a Powerline-compatible font to display correctly.
 
 Reload the tmux configuration:
 
