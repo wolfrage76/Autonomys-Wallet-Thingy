@@ -9,8 +9,6 @@ class NotificationManager:
         self.pushover_app_token = pushover_app_token
         self.telegram_bot_token = telegram_bot_token
         self.telegram_chat_id = telegram_chat_id, telegram_bot_token
-        
-        print('Balance Checker Initialized')
 
     def send_notification(self, message):
         if self.discord_webhook:
@@ -23,7 +21,7 @@ class NotificationManager:
             self._send_telegram_notification(message)
 
     def _send_discord_notification(self, message):
-        logging.info("Sending Discord notification...")
+        # logging.info("Sending Discord notification...")
         try:
             payload = {"content": message}
             response = requests.post(self.discord_webhook, json=payload)

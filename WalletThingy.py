@@ -76,8 +76,6 @@ class BalanceChecker:
         pushbullet_token=config["notifications"].get("pushbullet_token"),
         pushover_user_key=config["notifications"].get("pushover", {}).get("user_key"),
         pushover_app_token=config["notifications"].get("pushover", {}).get("app_token"),
-        
-        
         telegram_bot_token=config["notifications"].get("telegram",{}).get('bot_token'),
         telegram_chat_id=config["notifications"].get("telegram",{}).get('chat_id'),
     )
@@ -332,7 +330,7 @@ def main():
     truncated_addresses = [truncate_address(address) for address in addresses]
 
     logging.info("Starting BalanceChecker with the following configuration:")
-    logging.info(f"Node URL: {node_url}")
+    # logging.info(f"Node URL: {node_url}")
     logging.info(f"Addresses: {', '.join(truncated_addresses)}")
     logging.info(f"Check Interval: {check_interval} seconds")
     # logging.info(f"Run as tmux status bar: {run_as_tmux}")
