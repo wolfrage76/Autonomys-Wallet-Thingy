@@ -153,7 +153,6 @@ If you plan to use the tmux status bar with decorative symbols:
 
 - **Monitoring**: The script will monitor the specified wallet addresses and check for balance changes every `check_interval` seconds.
 - **Notifications**: You will receive notifications via the configured services when a balance change is detected.
-- **tmux Status Bar**: If enabled, the script will update the tmux status bar with wallet balances, CPU/memory usage, and GPU statistics.
 
 ## Example tmux Status Bar Output
 
