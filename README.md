@@ -1,11 +1,14 @@
 # Wallet Monitor
 
-This script monitors a set of wallets and notifies you of updates to your balance via Discord or Pushbullet. It can also display wallet balances and system statistics in your tmux status bar.
+This script monitors a set of wallets and notifies you of updates to your balance via Discord or Pushbullet. 
+
+It can also display wallet balances and system statistics in your tmux status bar.
 
 ## Features
 
 - **Balance Monitoring**: Keep track of multiple wallet addresses and detect balance changes.
 - **Notifications**: Receive alerts via Discord, Pushover, Telegram or Pushbullet when your wallet balances change.
+
 - **System Statistics**: Display CPU, memory usage, and GPU statistics.
 - **tmux Integration**: Seamlessly integrate with tmux to display information in the status bar.
 
@@ -37,24 +40,7 @@ cd Autonomys-Wallet-Thingy
 pip install substrate-interface psutil pyyaml
 ```
 
-### 3. Install Powerline Fonts (Optional)
-
-If you plan to use the tmux status bar with decorative symbols:
-
-- **Linux/macOS**:
-
-  ```bash
-  git clone https://github.com/powerline/fonts.git --depth=1
-  cd fonts
-  ./install.sh
-  ```
-
-- **Windows**:
-
-  - Download the fonts from the [Powerline Fonts GitHub repository](https://github.com/powerline/fonts).
-  - Install the fonts by opening each `.ttf` file and clicking "Install".
-
-### 4. Configure `config.yaml`
+### 3. Configure `config.yaml`
 
 Edit the `config.yaml.example` file in the project directory, edit settings then rename to `config.yaml`:
 
@@ -62,6 +48,44 @@ Edit the `config.yaml.example` file in the project directory, edit settings then
 - **`addresses`**: List of wallet addresses to monitor.
 - **`check_interval`**: Time interval (in seconds) between balance checks.
 - **`notifications`**: Provide credentials for notification services.
+
+
+### 4a. Run the Script in Foreground
+
+Start the wallet monitor:
+
+```bash
+python3 WalletThingy.py
+```
+
+If `python` points to Python 3 on your system, you can use:
+
+```bash
+python WalletThingy.py
+```
+
+### 4b. Run in the Background (Optional)
+
+To run the script in the background:
+
+- **Using `screen`**:
+
+  ```bash
+  screen -dmS wallet_monitor python3 WalletThingy.py
+  ```
+
+- **Using `nohup`**:
+
+  ```bash
+  nohup python3 WalletThingy.py &
+  ```
+
+- **Using `&`**:
+
+  ```bash
+  python3 WalletThingy.py &
+  ```
+
 
 ### 5. Configure tmux (Optional)
 
@@ -106,41 +130,24 @@ Reload the tmux configuration:
 tmux source-file ~/.tmux.conf
 ```
 
-### 6. Run the Script
 
-Start the wallet monitor:
+### 6. Install Powerline Fonts (Optional)
 
-```bash
-python3 WalletThingy.py
-```
+If you plan to use the tmux status bar with decorative symbols:
 
-If `python` points to Python 3 on your system, you can use:
-
-```bash
-python WalletThingy.py
-```
-
-### 7. Run in the Background (Optional)
-
-To run the script in the background:
-
-- **Using `screen`**:
+- **Linux/macOS**:
 
   ```bash
-  screen -dmS wallet_monitor python3 WalletThingy.py
+  git clone https://github.com/powerline/fonts.git --depth=1
+  cd fonts
+  ./install.sh
   ```
 
-- **Using `nohup`**:
+- **Windows**:
 
-  ```bash
-  nohup python3 WalletThingy.py &
-  ```
+  - Download the fonts from the [Powerline Fonts GitHub repository](https://github.com/powerline/fonts).
+  - Install the fonts by opening each `.ttf` file and clicking "Install".
 
-- **Using `&`**:
-
-  ```bash
-  python3 WalletThingy.py &
-  ```
 
 ## Usage
 
@@ -160,7 +167,7 @@ To run the script in the background:
 
 ## Acknowledgements
 
-- **Me**: Special thanks to myself for being awesome
+- **Me**: Special thanks to myself for being awesome, and so handsome
 
 ## Troubleshooting
 

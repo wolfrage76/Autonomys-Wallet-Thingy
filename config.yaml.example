@@ -1,4 +1,4 @@
-node_url: "ws://NodeIP:NodePort"  # Node and port to connect to
+node_url: "ws://NodeIP:NodePort"  # Node address and port to connect to
 
 addresses:  # List of wallet addresses
   - "ADDRESS1"
@@ -7,8 +7,6 @@ addresses:  # List of wallet addresses
 enable_gpu: True # Enable GPU monitoring when tmux-ing
 
 check_interval: 6  # Time interval in seconds
-
-#run_as_tmux: True # Shouldn't be needed to be set False, but need to test stuff
 
 notifications:
   discord_webhook: False # 'webhook_url' # Replace with Discord Webhook URL or set to false
