@@ -4,6 +4,9 @@ This script monitors a set of wallets and notifies you of updates to your balanc
 
 It can also display wallet balances and system statistics in your tmux status bar.
 
+Personally, I use it running in the background to send Discord notifications to a muted chan on my server I 
+can take peeks at to keep an eye on things 
+
 ## Features
 
 - **Balance Monitoring**: Keep track of multiple wallet addresses and detect balance changes.
